@@ -36,14 +36,13 @@ public class OpenSite {
     @Test
     public void fillFormAndSubmit(){
         webDriver.get("https://www.kmslh.com/automation-test/");
-        waitAndFindElement(By.xpath("//input[@name='firstname']")).sendKeys("Igor");
-        webDriver.findElement(By.xpath("//input[@name='lastname']")).sendKeys("Brodov");
-        webDriver.findElement(By.xpath("//input[@name='email']")).sendKeys("ibrodov@kmslh.com");
-        webDriver.findElement(By.xpath("//input[@name='phone']")).sendKeys("111-22-33");
-        webDriver.findElement(By.xpath("//input[@name='company']")).sendKeys("kmslh");
+        waitAndFindElement(By.name("firstname")).sendKeys("Igor");
+        webDriver.findElement(By.name("lastname")).sendKeys("Brodov");
+        webDriver.findElement(By.name("email")).sendKeys("ibrodov@kmslh.com");
+        webDriver.findElement(By.name("phone")).sendKeys("111-22-33");
+        webDriver.findElement(By.name("company")).sendKeys("kmslh");
         webDriver.findElement(By.xpath("//input[@value='Submit']")).click();
-        WebElement we = waitAndFindElement(By.xpath("//h1[contains(text(),'Thank you for singing up!')]"));
-        String confirmationText = we.getText();
+        String confirmationText = waitAndFindElement(By.tagName("h1")).getText();
         String actualText = confirmationText.substring(0,confirmationText.indexOf("!"));
         Assert.assertEquals(actualText,"Thank you for singing up");
     }
@@ -51,7 +50,7 @@ public class OpenSite {
     @Test
     public void openSelfServiceVideoInSeparateTab(){
         webDriver.get("https://www.kmslh.com");
-        waitAndFindElement(By.xpath(" //a[contains(@href,'self-service')]/parent::div")).click();
+        waitAndFindElement(By.xpath("//a[contains(@href,'self-service')]/parent::div")).click();
         // For my IE browser popup doesn't display sometimes even with 'turn on pop-up blocker' option unckecked and this test often fails
         // in chrome test passes
         waitAndFindElement(By.xpath("//div[@data-elementor-type='popup']"));
